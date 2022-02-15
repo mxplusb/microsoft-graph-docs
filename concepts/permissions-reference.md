@@ -29,9 +29,21 @@ The _constraint_ element of the name determines the potential extent of access y
 
 > **Note**: In delegated scenarios, the effective permissions granted to your app are constrained by the privileges of the signed-in user in the organization.
 
-## Microsoft accounts and work or school accounts
+## API Authentication Types
 
-Not all permissions are valid for both Microsoft accounts and work or school accounts. You can check the **Microsoft Account Supported** column for each permission group to determine whether a specific permission is valid for Microsoft accounts, work or school accounts, or both.
+### Microsoft accounts and work or school accounts
+
+Not all permissions are valid for both Microsoft accounts and work or school accounts. You can check the **Microsoft Account Supported** column for each permission group to determine whether a specific permission is valid for Microsoft accounts, work or school accounts, or both. Microsoft accounts and work or school accounts are considered "Delegated".
+
+### App Permissions
+
+Not all Microsoft Graph APIs support delegated authentication; i.e. authentication with Microsoft accounts and work or school accounts. When reviewing the supported APIs for each service, pay close attention to the Permissions tables in each API call. When an API endpoint's permissions table markes "Delegated" permissions as "Not Supported", this means that API only supports authentication and authorization through Application permissions.
+
+### Authentication with the Azure CLI
+
+The Azure CLI supports direct REST calls through the [`az rest`](https://docs.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest#az-rest) functionality. To use `az rest` commands with the Microsoft Graph, you first must call [`az login`](https://docs.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest#az-login). To leverage "Delegated" permissions assigned to your user, i.e. Microsoft accounts and work or school accounts, leveraging the interactive login flow with `az login` will suffice. For Microsoft Graph APIs which do not support "Delegated" permissions, leveraging the Service Principal authentication functionality will allow developers to make properly authenticated REST calls. For more information on Service Principals, please see the [Application and service principal objects in Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) documentation.
+
+> **Note**: REST calls with `az rest` assume the authentication and permissions scheme of the signed-in user. Please see the [`az rest`](https://docs.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest#az-rest) documentation for more information.
 
 ## Limits on requested permissions per app
 
